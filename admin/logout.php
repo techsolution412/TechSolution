@@ -1,14 +1,7 @@
 <?php
-require_once '../config/DataBase.php';
+session_start();
+session_unset();      
+session_destroy();    
 
-if (isset($_POST['logout'])) {
- 
-    session_unset();
-
-    
-    session_destroy();
-
-    header("Location: acces.php");
-    exit();
-}
-
+header("Location: acces.php"); 
+exit;

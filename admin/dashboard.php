@@ -6,6 +6,9 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 $stmt = $conn->query("SELECT * FROM rendezvous ORDER BY date DESC, heure DESC");
+$stmt = $conn->query("SELECT nom, email, numero
+FROM rendezvous")
+$clients = $stmt->fetchAll(PDO::FETCH_ASSOC)
 $rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -70,6 +73,27 @@ $rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <td><?= $rdv['heure'] ?></td>
         <td><?= htmlspecialchars($rdv['service']) ?></td>
         <td><?= nl2br(htmlspecialchars($rdv['message'])) ?></td>
+      </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+
+<hr>
+<h3> Liste des clients</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Téléphone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($clients as $client): ?>
+      <tr>
+        <td><?= htmlspecialchars($client['nom']) ?></td>
+        <td><?= htmlspecialchars($client['email']) ?></td>
+        <td><?= htmlspecialchars($client['telephone']) ?></td>
       </tr>
     <?php endforeach; ?>
   </tbody>
