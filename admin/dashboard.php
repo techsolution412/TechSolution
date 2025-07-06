@@ -6,9 +6,8 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 $stmt = $conn->query("SELECT * FROM rendezvous ORDER BY date DESC, heure DESC");
-$stmt = $conn->query("SELECT nom, email, numero
-FROM rendezvous")
-$clients = $stmt->fetchAll(PDO::FETCH_ASSOC)
+$stmt = $conn->query("SELECT nom, email, telephone FROM rendezvous");
+$clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
