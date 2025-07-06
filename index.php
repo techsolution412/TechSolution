@@ -214,7 +214,7 @@ include_once 'config/DataBase.php';
 
             <div class="flex flex-col md:flex-row">
                 <div class="container">
-                    <form method="POST" class="space-y-6" action="config/traitements.php">
+                    <form method="POST" class="space-y-6" id="contactForm">
                         <input type="text" name="nom" id="Nom"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
                             placeholder="Votre nom complet" required>
@@ -243,6 +243,9 @@ include_once 'config/DataBase.php';
                         <textarea name="message" id="Message" rows="5"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
                             placeholder="Laissez un message (facultatif)" rows="4"></textarea>
+                        
+                        <div id="messageConfirm" class=" "></div>
+                        
                         <button type="submit"
                             class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">Réserver</button>
                     </form>
@@ -368,6 +371,7 @@ include_once 'config/DataBase.php';
         </div>
     </footer>
     <script src="assets/script.js"></script>
+    <script src="assets/traitement.js"></script>
 </body>
 
 </html>

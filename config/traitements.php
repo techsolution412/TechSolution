@@ -1,30 +1,37 @@
 <?php
+header('Content-Type: application/json');
 include_once "DataBase.php";
 $messageConfirm = "";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $nom = htmlspecialchars($_POST["nom"]);
-    $email = htmlspecialchars($_POST["email"]);
-    $telephone = htmlspecialchars($_POST["telephone"]);
-    $date = $_POST["date"];
-    $heure = $_POST["heure"];
-    $service = htmlspecialchars($_POST["service"]);
-    $messageClient = htmlspecialchars($_POST["message"]);
+try{
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $nom = htmlspecialchars($_POST["nom"]);
+        $email = htmlspecialchars($_POST["email"]);
+        $telephone = htmlspecialchars($_POST["telephone"]);
+        $date = $_POST["date"];
+        $heure = $_POST["heure"];
+        $service = htmlspecialchars($_POST["service"]);
+        $messageClient = htmlspecialchars($_POST["message"]);
 
-    $sql = "INSERT INTO rendezvous (nom, email, telephone, date, heure, service, message) 
-            VALUES (:nom, :email, :telephone, :date, :heure, :service, :message)";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([
-        ':nom' => $nom,
-        ':email' => $email,
-        ':telephone' => $telephone,
-        ':date' => $date,
-        ':heure' => $heure,
-        ':service' => $service,
-        ':message' => $messageClient
-    ]);
+        $sql = "INSERT INTO rendezvous (nom, email, telephone, date, heure, service, message) 
+                VALUES (:nom, :email, :telephone, :date, :heure, :service, :message)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            ':nom' => $nom,
+            ':email' => $email,
+            ':telephone' => $telephone,
+            ':date' => $date,
+            ':heure' => $heure,
+            ':service' => $service,
+            ':message' => $messageClient
+        ]);
 
-    $messageConfirm = "✅ Rendez-vous enregistré avec succès.";
+        // $messageConfirm = ;
+        echo json_encode(["succes" => true, "message" => "✅ Rendez-vous enregistré avec succès."]);
+    }
+}catch(Exception $e){
+    echo json_encode(["succes" => false, "message" => "Erreur : ". $e->getMessage()]);
+}
     
 //     // Préparation de l’e-mail
 // $to = $email;
@@ -72,4 +79,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 //                 "Content-Type: text/plain; charset=UTF-8";
 
 // mail($adminEmail, $adminSujet, $adminMessage, $adminHeaders);
-}
