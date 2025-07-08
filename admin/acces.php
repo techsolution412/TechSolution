@@ -14,8 +14,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($admin && password_verify($motDePasse, $admin['mot_de_passe'])) {
         $_SESSION['admin'] = $admin['pseudo'];
+
+        require_once 'gestionReservation.php';
+        
         header("Location: dashboard.php");
-        exit;
+        exit();
     } else {
         $error = "Identifiants invalides.";
     }

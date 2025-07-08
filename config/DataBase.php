@@ -1,7 +1,7 @@
 <?php
 $servername = "127.0.0.1";
 $username = "root";
-$password = "";
+$password = "TechSolution12345678";
 $dbName = "techsolutions";
 
 try {
@@ -14,3 +14,4 @@ try {
 }
 
 // var_dump($conn);
+// ping sql208.infinityfree.com
