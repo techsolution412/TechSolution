@@ -1,0 +1,11 @@
+- Systeme de notification a implimenter pour recevoir des notifications(non valide)
+- Systeme de log pour chaque connexion des admins (operationnel)
+- gerer la securite pour les champs de saisie(
+- Champs vides
+- Email invalide
+- Numeros non conformes
+- Injection simple ou XSS basique
+- Erreurs retournées proprement)
+- securite pour le panel de connexion de l'admin
+- au bout de 5 tentatives l'acces est bloquer
+niveau securite je penses que on n'est bon a notre niveau 

@@ -3,27 +3,62 @@ session_start();
 require_once '../config/DataBase.php';
 
 $error = "";
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $email = $_POST['pseudo'];
-    $motDePasse = $_POST['mot_de_passe'];
-
-    $stmt = $conn->prepare("SELECT * FROM admins WHERE pseudo = :pseudo");
-    $stmt->execute([':pseudo' => $email]);
-    $admin = $stmt->fetch();
-
-    if ($admin && password_verify($motDePasse, $admin['mot_de_passe'])) {
-        $_SESSION['admin'] = $admin['pseudo'];
-
-        require_once 'gestionReservation.php';
-        
-        header("Location: dashboard.php");
-        exit();
+    $pseudo = trim($_POST['pseudo']);
+    $motDePasse = trim($_POST['mot_de_passe']);
+    if (empty($pseudo) || empty($motDePasse)) {
+        $error = " Veuillez remplir tous les champs.";
     } else {
-        $error = "Identifiants invalides.";
+        //   Anti-bruteforce
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $check = $conn->prepare("SELECT COUNT(*) FROM connexions_admin WHERE adresse_ip = ? AND statut = 'échec' AND date_connexion > NOW() - INTERVAL 5 MINUTE");
+        $check->execute([$ip]);
+        $tentatives = $check->fetchColumn();
+
+        if ($tentatives >= 5) {
+          echo "Trop de tentatives echouees depuis votre IP. Veuillez reessayer plus tard.";
+          exit;
+        }
+       
+        $stmt = $conn->prepare("SELECT * FROM admins WHERE pseudo = :pseudo");
+        $stmt->execute([':pseudo' => $pseudo]);
+        $admin = $stmt->fetch();
+
+        // Initialisation log
+       
+        $statut = 'echec';
+        if ($admin && password_verify($motDePasse, $admin['mot_de_passe'])) {
+            // Connexion 
+            $_SESSION['admin'] = $admin['pseudo'];
+            $_SESSION['admin_id'] = $admin['id']; 
+            $statut = 'succès';
+            // Log de la connexion
+            $log = $conn->prepare("INSERT INTO connexions_admin (admin_id, pseudo, adresse_ip, statut) VALUES (?, ?, ?, ?)");
+            $log->execute([
+                $admin['id'],
+                $admin['pseudo'],
+                $ip,
+                $statut
+            ]);
+
+            header("Location: dashboard.php");
+            exit;
+        } else {
+            // Log tentative echec
+            $log = $conn->prepare("INSERT INTO connexions_admin (admin_id, pseudo, adresse_ip, statut) VALUES (?, ?, ?, ?)");
+            $log->execute([
+                $admin['id'] ?? 0,
+                $pseudo,
+                $ip,
+                $statut
+            ]);
+
+            $error = " Identifiants invalides.";
+        }
     }
 }
 ?>
+
 
 
 <!DOCTYPE html>
