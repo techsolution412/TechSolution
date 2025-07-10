@@ -18,6 +18,11 @@ if(!isset($_GET['id'])){
     $stmt->execute();
     $reservation = $stmt->fetch(PDO::FETCH_ASSOC);
 
+    $sql = "SELECT * FROM services";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 }
 require_once "header.php";
 
@@ -105,12 +110,13 @@ require_once "header.php";
                             <div class="mb-4">
                                 <label for="reservationService" class="block mb-2 text-sm font-medium text-gray-900">Service</label>
                                 <select id="reservationService" name="service" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 custom-select">
-                                    <option value="SiteWeb">SiteVitrine</option>
-                                    <option value="applicatonMobile">ApplicationMobile</option>
-                                    <option value="E-commerce">Site E-commerce</option>
-                                    <option value="Maintenance">Maintenance</option>
-                                    <option value="Installation">Installation des systemes d'exploitation</option>
-
+                                    <?php foreach($services as $service) :
+                                        if ($service['id'] == $reservation['service_id']) { ?>
+                                            <option value='<?=$service['id']?>' selected><?=$service['nom']?></option>"
+                                        <?php } else { ?>
+                                            <option value='<?=$service['id']?>'><?=$service['nom']?></option>
+                                    <?php } 
+                                        endforeach ?>
                                 </select>
                             </div>
 
@@ -168,7 +174,7 @@ require_once "header.php";
                         </div>
                         
                         <!-- Timeline Item -->
-                        <div class="relative">
+                        <!-- <div class="relative">
                             <div class="absolute -left-3.5 top-1 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
                                 <i class="fas fa-pen text-white text-xs"></i>
                             </div>
@@ -182,10 +188,10 @@ require_once "header.php";
                                     <span class="text-xs text-gray-500">20 Nov 2023, 14:15</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         
                         <!-- Timeline Item -->
-                        <div class="relative">
+                        <!-- <div class="relative">
                             <div class="absolute -left-3.5 top-1 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
                                 <i class="fas fa-user text-white text-xs"></i>
                             </div>
@@ -199,7 +205,7 @@ require_once "header.php";
                                     <span class="text-xs text-gray-500">22 Nov 2023, 09:45</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

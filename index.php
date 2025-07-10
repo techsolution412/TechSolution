@@ -1,6 +1,11 @@
 <?php
 include_once 'config/DataBase.php';
  $messageConfirm = "";
+// Récupération des services depuis la base de données
+$sql = "SELECT * FROM services";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$services = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -229,16 +234,15 @@ include_once 'config/DataBase.php';
                         <select name="service" id="Services"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
                             required>
-                            <!-- voici les services
-                             
-                                ('web', 'mobile', 'security', 'support', 'Cv','Other')
-                            -->
-                            <option value="">Choisissez un service</option>
-                            <option value="SiteWeb">SiteVitrine</option>
+                            
+                            <?php foreach($services as $service) : ?>
+                                <option value='<?=$service['id']?>'><?=$service['nom']?></option>";
+                            <?php endforeach ?>
+                            <!-- <option value="SiteWeb">SiteVitrine</option>
                             <option value="applicatonMobile">ApplicationMobile</option>
                             <option value="E-commerce">Site E-commerce</option>
                             <option value="Maintenance">Maintenance</option>
-                            <option value="Installation">Installation des systemes d'exploitation</option>
+                            <option value="Installation">Installation des systemes d'exploitation</option> -->
                         </select>
                         <textarea name="message" id="Message" rows="5"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"

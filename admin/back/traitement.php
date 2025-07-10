@@ -14,7 +14,7 @@ try{
         $statut = htmlspecialchars($_POST["statut"]); 
         $messageClient = htmlspecialchars($_POST["message"]);
 
-        $sql = "UPDATE rendezvous SET nom =:nom , email=:email, telephone = :telephone, date = :date, heure = :heure, service = :service, statut = :statut, message = :message WHERE id = :id"; 
+        $sql = "UPDATE rendezvous SET nom =:nom , email=:email, telephone = :telephone, date = :date, heure = :heure, service_id = :service_id, statut = :statut, message = :message WHERE id = :id"; 
         $stmt = $conn->prepare($sql);
         $stmt->execute([
             ':nom' => $nom,
@@ -22,10 +22,10 @@ try{
             ':telephone' => $telephone,
             ':date' => $date,
             ':heure' => $heure,
-            ':service' => $service,
+            ':service_id' => $service,
             ':statut' => $statut, // Statut par défaut
             ':message' => $messageClient,
-            ':id' => $_POST['id'] // Assurez-vous que l'ID est passé dans la requête
+            ':id' => $_POST['id'] 
         ]);
 
         // $messageConfirm = ;

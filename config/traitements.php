@@ -48,7 +48,7 @@ try {
         }
 
         // Insertion
-        $sql = "INSERT INTO rendezvous (nom, email, telephone, date, heure, service, message) 
+        $sql = "INSERT INTO rendezvous (nom, email, telephone, date, heure, service_id, message) 
                 VALUES (:nom, :email, :telephone, :date, :heure, :service, :message)";
         $stmt = $conn->prepare($sql);
         $stmt->execute([

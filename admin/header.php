@@ -46,16 +46,16 @@
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
         <div class="sidebar fixed md:relative w-64 bg-white shadow-md z-10">
-            <div class="p-4 border-b border-gray-200">
-                <h1 class="text-xl font-bold text-primary flex items-center">
+            <div class="p-4 border-b border-gray-200 ">
+                <a href="dashboard.php" class="text-xl font-bold text-primary flex items-center cursor-pointer">
                     <img src="../assets/img/ts.png" alt="techSolution" id="logo" width="50px" height="50px">
-                </h1>
+                </a>
                 <p class="text-xs text-gray-500 mt-2">Panel Admin</p>
             </div>
             <nav class="p-4">
                 <ul>
                     <li class="mb-2">
-                        <a href="#" class="flex items-center p-2 text-white bg-primary rounded-lg">
+                        <a href="dashboard.php" class="flex items-center p-2 text-white bg-primary rounded-lg">
                             <i class="fas fa-calendar-alt mr-3"></i> Rendez-vous
                         </a>
                     </li>
@@ -77,8 +77,9 @@
                 </ul>
             </nav>
             <div class="absolute bottom-0 w-full p-4 border-t border-gray-200">
-                <div class="flex items-center">
+                <div class="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded-lg">
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Profile" class="w-8 h-8 rounded-full mr-2">
+                    
                     <div>
                         <p class="text-sm font-medium"><?= htmlspecialchars($_SESSION['admin'] )?></p>
                     </div>

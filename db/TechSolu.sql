@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `admins` (
   `pseudo` varchar(255) NOT NULL,
   `mot_de_passe` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6;
 
 --
 -- Déchargement des données de la table `admins`
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `connexions_admin` (
   `statut` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `admin_id` (`admin_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=15;
 
 --
 -- Déchargement des données de la table `connexions_admin`
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `rendezvous` (
   `service` enum('SiteWeb','applicatonMobile','E-commerce','Maintenance','Installation') NOT NULL,
   `message` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 ;
 
 --
 -- Déchargement des données de la table `rendezvous`

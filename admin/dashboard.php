@@ -6,11 +6,11 @@ if (!isset($_SESSION['admin'])) {
     exit;
 }
 // var_dump($_SESSION);
-$stmt = $conn->query("SELECT * FROM rendezvous ORDER BY date DESC, heure DESC");
-$stmt = $conn->query("SELECT nom, email, telephone FROM rendezvous");
+$stmt = $conn->query("SELECT rdv.*, srv.nom AS service, srv.prix FROM rendezvous AS rdv INNER JOIN services AS srv ON rdv.service_id = srv.id WHERE statut != 'archive' ORDER BY date DESC, heure DESC ");
+// $rdv = $conn->query("SELECT nom, email, telephone FROM rendezvous");
 $log = $conn ->query("SELECT * FROM connexions_admin ORDER BY date_connexion DESC");
 $acces_log = $log ->fetchAll(PDO::FETCH_ASSOC);
-$clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
@@ -31,6 +31,7 @@ require_once 'header.php';
                         </div>
                         <div class="relative flex-1">
                             <select class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg appearance-none focus:ring-2 focus:ring-primary focus:border-primary outline-none">
+                                
                                 <option value="">Toutes les catégories</option>
                                 <option value="consultation">Consultation</option>
                                 <option value="development">Développement</option>
