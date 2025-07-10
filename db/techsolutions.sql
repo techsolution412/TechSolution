@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 10 juil. 2025 à 18:56
+-- Généré le : jeu. 10 juil. 2025 à 21:06
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -82,7 +82,8 @@ INSERT INTO `connexions_admin` (`id`, `admin_id`, `pseudo`, `adresse_ip`, `date_
 (18, 3, 'Hitler', '::1', '2025-07-10 01:09:03', 'echec'),
 (19, 3, 'Hitler', '::1', '2025-07-10 01:09:37', 'succès'),
 (20, 3, 'Hitler', '::1', '2025-07-10 15:51:56', 'succès'),
-(21, 3, 'Hitler', '::1', '2025-07-10 16:25:32', 'succès');
+(21, 3, 'Hitler', '::1', '2025-07-10 16:25:32', 'succès'),
+(22, 3, 'Hitler', '::1', '2025-07-10 18:30:25', 'succès');
 
 -- --------------------------------------------------------
 
@@ -97,7 +98,7 @@ CREATE TABLE `rendezvous` (
   `telephone` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `heure` time NOT NULL DEFAULT current_timestamp(),
-  `service` enum('SiteWeb','applicatonMobile','E-commerce','Maintenance','Installation') NOT NULL,
+  `service_id` int(11) NOT NULL,
   `statut` enum('en cours','en attente','termine','en retard','archive') NOT NULL DEFAULT 'en attente',
   `dateCreation` timestamp NOT NULL DEFAULT current_timestamp(),
   `message` text NOT NULL
@@ -107,9 +108,31 @@ CREATE TABLE `rendezvous` (
 -- Déchargement des données de la table `rendezvous`
 --
 
-INSERT INTO `rendezvous` (`id`, `nom`, `email`, `telephone`, `date`, `heure`, `service`, `statut`, `dateCreation`, `message`) VALUES
-(1, 'test', 'test@gmail.com', '787518823', '2025-07-10', '20:04:00', 'SiteWeb', 'archive', '2025-07-10 16:14:52', 'test'),
-(2, 'test', 'ghostshooter672@gmail.com', '787518822', '2025-07-11', '21:15:00', 'Installation', 'en attente', '2025-07-10 16:15:46', 'test');
+INSERT INTO `rendezvous` (`id`, `nom`, `email`, `telephone`, `date`, `heure`, `service_id`, `statut`, `dateCreation`, `message`) VALUES
+(3, 'test', 'test@gmail.com', '787518822', '2025-07-11', '20:55:00', 2, 'en attente', '2025-07-10 18:56:37', 'ggggg');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `services`
+--
+
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL,
+  `nom` varchar(255) NOT NULL,
+  `prix` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `services`
+--
+
+INSERT INTO `services` (`id`, `nom`, `prix`) VALUES
+(1, 'Site vitrine', 100000),
+(2, 'Application mobile', 350000),
+(3, 'Site E-commerce', 150000),
+(4, 'Maintenance', 20000),
+(5, 'Installation des systemes d\'exploitation', 20000);
 
 --
 -- Index pour les tables déchargées
@@ -132,6 +155,13 @@ ALTER TABLE `connexions_admin`
 -- Index pour la table `rendezvous`
 --
 ALTER TABLE `rendezvous`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `service_id` (`service_id`);
+
+--
+-- Index pour la table `services`
+--
+ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -148,13 +178,29 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT pour la table `connexions_admin`
 --
 ALTER TABLE `connexions_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT pour la table `rendezvous`
 --
 ALTER TABLE `rendezvous`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `rendezvous`
+--
+ALTER TABLE `rendezvous`
+  ADD CONSTRAINT `rendezvous_ibfk_1` FOREIGN KEY (`service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
