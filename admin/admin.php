@@ -19,4 +19,4 @@ $stmt->execute([
     ':mot_de_passe' => $hash
 ]);
 
-echo "✅ Admin succes!";
+echo " Admin succes!";

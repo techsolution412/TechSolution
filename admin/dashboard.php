@@ -1,14 +1,16 @@
 <?php
 require_once '../config/DataBase.php';
-require_once 'gestionReservation.php';
-// session_start();
+session_start();
 if (!isset($_SESSION['admin'])) {
     header("Location: acces.php");
     exit;
 }
-$stmt = $conn->prepare("SELECT * FROM rendezvous WHERE statut != :statut ORDER BY date ASC, heure ASC");
-$stmt -> execute([':statut' => 'archive']);
-// $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// var_dump($_SESSION);
+$stmt = $conn->query("SELECT * FROM rendezvous ORDER BY date DESC, heure DESC");
+$stmt = $conn->query("SELECT nom, email, telephone FROM rendezvous");
+$log = $conn ->query("SELECT * FROM connexions_admin ORDER BY date_connexion DESC");
+$acces_log = $log ->fetchAll(PDO::FETCH_ASSOC);
+$clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
