@@ -265,7 +265,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                                 <div>
                                     <h4 class="font-semibold text-gray-800">phone</h4>
-                                    <p class="text-gray-600">+221 70 234 67 89</p>
+                                    <p class="text-gray-600">+221 71 045 11 87</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
@@ -274,7 +274,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                                 <div>
                                     <h4 class="font-semibold text-gray-800">Email</h4>
-                                    <p class="text-gray-600">contact@techsolutions.fr</p>
+                                    <p class="text-gray-600">solutiontech412@gmail.com</p>
                                 </div>
                             </div>
                             <div class="flex items-start">
