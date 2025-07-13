@@ -31,22 +31,34 @@ try {
             exit;
         }
         
-        // Combinaison des deux en objet DateTime
+       
+      // Combinaison date + heure
         $rendezVous = DateTime::createFromFormat('Y-m-d H:i', $date . ' ' . $heure);
         $now = new DateTime();
 
-        // Verifie si la date/heure est valide
         if (!$rendezVous) {
-            echo json_encode(["succes" => false, "message" => " Format de date ou heure invalide."]);
+            echo json_encode(["succes" => false, "message" => " Format de date ou d'heure invalide."]);
             exit;
         }
 
-        // Verifie si la date/heure est dans le passe
+        // Verifie 
         if ($rendezVous < $now) {
-            echo json_encode(["succes" => false, "message" => " La date ou l'heure du rendez-vous est deja passee."]);
+            echo json_encode(["succes" => false, "message" => "La date ou l'heure est invalide."]);
             exit;
         }
 
+        // Limite les heures autorise entre 09:00 et 20:30
+        $heureRV = (int) $rendezVous->format('H');    // Heure seule
+        $minuteRV = (int) $rendezVous->format('i');   // Minute seule
+
+        if (
+            $heureRV < 9 || 
+            ($heureRV === 20 && $minuteRV > 30) || 
+            $heureRV > 20
+        ) {
+            echo json_encode(["succes" => false, "message" => " Les rendez-vous sont autorises uniquement entre 09h00 et 20h30."]);
+            exit;
+        }
         // Insertion
         $sql = "INSERT INTO rendezvous (nom, email, telephone, date, heure, service_id, message) 
                 VALUES (:nom, :email, :telephone, :date, :heure, :service, :message)";
