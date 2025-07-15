@@ -4,17 +4,43 @@ session_start();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
+
+$conditions = ["statut != 'archive'"];
+$params = [];
+
 if (!isset($_SESSION['admin'])) {
     header("Location: acces.php");
     exit;
 }
+
+if (!empty($_GET['search'])) {
+    $conditions[] = "(rdv.nom LIKE :search OR rdv.email LIKE :search OR rdv.telephone LIKE :search)";
+    $params[':search'] = '%' . $_GET['search'] . '%';
+}
+if (!empty($_GET['categorie'])) {
+    $conditions[] = "srv.nom = :categorie";
+    $params[':categorie'] = $_GET['categorie'];
+}
+if (!empty($_GET['date'])) {
+    $conditions[] = "rdv.date = :date";
+    $params[':date'] = $_GET['date'];
+}
+
+$where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
+$sql = "SELECT rdv.*, srv.nom AS service, srv.prix FROM rendezvous AS rdv INNER JOIN services AS srv ON rdv.service_id = srv.id $where ORDER BY date DESC, heure DESC";
+$stmt = $conn->prepare($sql);
+$stmt->execute($params);
+$rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // var_dump($_SESSION);
-$stmt = $conn->query("SELECT rdv.*, srv.nom AS service, srv.prix FROM rendezvous AS rdv INNER JOIN services AS srv ON rdv.service_id = srv.id WHERE statut != 'archive' ORDER BY date DESC, heure DESC ");
+
+
+
+// $stmt = $conn->query("SELECT rdv.*, srv.nom AS service, srv.prix FROM rendezvous AS rdv INNER JOIN services AS srv ON rdv.service_id = srv.id WHERE statut != 'archive' ORDER BY date DESC, heure DESC ");
 // $rdv = $conn->query("SELECT nom, email, telephone FROM rendezvous");
 $log = $conn ->query("SELECT * FROM connexions_admin ORDER BY date_connexion DESC");
 $acces_log = $log ->fetchAll(PDO::FETCH_ASSOC);
 // $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// $rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 $dateAujourdhui = date('Y-m-d');
@@ -26,34 +52,36 @@ require_once 'header.php';
 ?>
             <!-- Filters and Actions -->
             <div class="bg-white p-4 mx-4 my-4 rounded-lg shadow-sm">
-                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <form method="GET" class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
                     <div class="flex flex-col sm:flex-row gap-4 flex-1">
                         <div class="relative flex-1">
-                            <input type="text" placeholder="Rechercher un rendez-vous..." class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none">
+                            <input type="text" name="search" value="<?= htmlspecialchars($_GET['search'] ?? '') ?>" placeholder="Rechercher un rendez-vous..." class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none">
                             <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
                         </div>
                         <div class="relative flex-1">
-                            <select class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg appearance-none focus:ring-2 focus:ring-primary focus:border-primary outline-none">
-                                
+                            <select name="categorie" class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg appearance-none focus:ring-2 focus:ring-primary focus:border-primary outline-none">
                                 <option value="">Toutes les catégories</option>
-                                <option value="consultation">Consultation</option>
-                                <option value="development">Développement</option>
-                                <option value="meeting">Réunion</option>
-                                <option value="support">Support technique</option>
+                                <option value="site vitrine" <?= (($_GET['categorie'] ?? '') == 'site vitrine') ? 'selected' : '' ?>>Site vitrine</option>
+                                <option value="e-commerce" <?= (($_GET['categorie'] ?? '') == 'e-commerce') ? 'selected' : '' ?>>E-commerce</option>
+                                <option value="maintenance" <?= (($_GET['categorie'] ?? '') == 'maintenance') ? 'selected' : '' ?>>Maintenance</option>
+                                <option value="installation" <?= (($_GET['categorie'] ?? '') == 'installation') ? 'selected' : '' ?>>Installation OS</option>
                             </select>
                             <i class="fas fa-chevron-down absolute right-3 top-3 text-gray-400"></i>
                         </div>
                     </div>
                     <div class="flex flex-col sm:flex-row gap-4">
                         <div class="relative flex-1">
-                            <input type="date" class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none">
+                            <input type="date" name="date" value="<?= htmlspecialchars($_GET['date'] ?? '') ?>" class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none">
                             <i class="fas fa-calendar-alt calendar-icon text-gray-400"></i>
                         </div>
-                        <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition flex items-center">
+                        <button type="submit" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition flex items-center">
                             <i class="fas fa-filter mr-2"></i> Filtrer
                         </button>
+                        <a href="dashboard.php" class="bg-red-200 text-red-700 px-4 py-2 rounded-lg hover:bg-red-300 transition flex items-center">
+                            <i class="fas fa-times mr-2"></i> Supprimer les filtres
+                        </a>
                     </div>
-                </div>
+                </form>
             </div>
 
             <!-- Stats Cards -->
