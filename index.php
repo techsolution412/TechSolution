@@ -229,8 +229,16 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <input type="text" name="telephone" placeholder="Téléphone" id="telephone"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
                             required>
-                        <input type="date" name="date" required>
-                        <input type="time" name="heure" required>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <input type="date" name="date"
+                                class="w-full sm:w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent bg-white text-gray-800"
+                                value="<?= date('Y-m-d') ?>"
+                                required>
+                            <input type="time" name="heure"
+                                class="w-full sm:w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent bg-white text-gray-800"
+                                value="<?= date('H:i') ?>"
+                                required>
+                        </div>
                         <select name="service" id="Services"
                             class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
                             required>
