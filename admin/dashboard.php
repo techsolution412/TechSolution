@@ -4,17 +4,16 @@ session_start();
 header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
-
-$conditions = ["statut != 'archive'"];
-$params = [];
-
 if (!isset($_SESSION['admin'])) {
     header("Location: acces.php");
     exit;
 }
 
+$conditions = ["statut != 'archive'"];
+$params = [];
+
 if (!empty($_GET['search'])) {
-    $conditions[] = "(rdv.nom LIKE :search OR rdv.email LIKE :search OR rdv.telephone LIKE :search)";
+    $conditions[] = "(rdv.nom LIKE :search OR rdv.email LIKE :search OR rdv.telephone LIKE :search OR rdv.statut LIKE :search)";
     $params[':search'] = '%' . $_GET['search'] . '%';
 }
 if (!empty($_GET['categorie'])) {
