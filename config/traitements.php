@@ -3,6 +3,21 @@ header('Content-Type: application/json');
 include_once "DataBase.php";
 $messageConfirm = "";
 
+// la fonction pour les notifications telegram
+function NotifTelegram($message){
+    // mettre les token et le chat bot du telegram
+    $token = "8168815760:AAHzrHyNTxVN366g0oVGCsV0oUf35tttWNU"; //token 8168815760:AAHzrHyNTxVN366g0oVGCsV0oUf35tttWNU
+    $chat_id = "8029642357"; //id de notre chat telegram
+    
+    $url = "https://api.telegram.org/bot$token/sendMessage";
+
+    $data = [
+        'chat_id' => $chat_id,
+        'text' => $message
+    ];
+
+    file_get_contents($url . '?' . http_build_query($data));
+}
 
 try {
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -14,6 +29,7 @@ try {
         $heure = $_POST["heure"];
         $service = trim(htmlspecialchars($_POST["service"]));
         $messageClient = trim(htmlspecialchars($_POST["message"]));
+        $ip = $_SERVER['REMOTE_ADDR'];
 
         // Verification des champs de saisi 
         if (empty($nom) || empty($email) || empty($telephone) || empty($date) || empty($heure) || empty($service)) {
@@ -72,7 +88,19 @@ try {
             ':service' => $service,
             ':message' => $messageClient
         ]);
+         
+        // Notification Telegram 
+        $sms = " *Nouveau rendez-vous reçu !*\n"
+             . " *Nom* : $nom\n"
+             . " *Email* : $email\n"
+             . " *Telephone* : $telephone\n"
+             . " *Date* : $date à $heure\n"
+             . " *Service* : $service\n"
+             . " *Message* : $messageClient\n"
+             . " *Adresse Ip Client* : $ip";
 
+             //appel de la fonction NotifTelegram($sms)
+        NotifTelegram($sms);
         echo json_encode(["succes" => true, "message" => " Rendez-vous enregistre avec succes."]);
     }
 } catch (Exception $e) {

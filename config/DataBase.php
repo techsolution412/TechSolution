@@ -2,10 +2,11 @@
 $servername = "127.0.0.1";
 $username = "root";
 $password = "";
-$dbName = "techsolutions";
+// remplace juste le nom de la database que tu as 
+$dbName = "host";
 
 try {
-  $conn = new PDO("mysql:host=$servername;dbname=techsolutions", $username, $password);
+  $conn = new PDO("mysql:host=$servername;dbname=host", $username, $password);
   // set the PDO error mode to exception
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 //   echo "Connected successfully";
