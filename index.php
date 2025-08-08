@@ -1,7 +1,7 @@
 <?php
 include_once 'config/DataBase.php';
  $messageConfirm = "";
-// Récupération des services depuis la base de données
+// Récupération des services 
 $sql = "SELECT * FROM services";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -15,6 +15,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechSolutions - Votre Partenaire Informatique</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel = "icon" href="svg/TS.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="assets/style.css">
 </head>
@@ -24,15 +25,14 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="container mx-auto px-6 py-3">
             <div class="flex items-center justify-between">
                 <div class="flex items-center">
-                    <div class="text-2xl font-bold text-indigo-600">Tech<span class="text-gray-800">Solutions</span>
+                    <div class="text-2xl font-bold text-orange-500">Tech<span class="text-gray-800">Solutions</span>
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="nav-link text-gray-800 hover:text-indigo-600">Accueil</a>
-                    <a href="#services" class="nav-link text-gray-800 hover:text-indigo-600">Services</a>
-                    <a href="#projects" class="nav-link text-gray-800 hover:text-indigo-600">Projets</a>
-                    <a href="#about" class="nav-link text-gray-800 hover:text-indigo-600">À Propos</a>
-                    <a href="#contact" class="nav-link text-gray-800 hover:text-indigo-600">Contact</a>
+                    <a href="#home" class="nav-link text-gray-800 hover:text-orange-600">Accueil</a>
+                    <a href="#services" class="nav-link text-gray-800 hover:text-orange-600">Services</a>
+                    <a href="#about" class="nav-link text-gray-800 hover:text-orange-600">À Propos</a>
+                    <a href="#contact" class="nav-link text-gray-800 hover:text-orange-600">Contact</a>
                 </div>
                 <button class="md:hidden focus:outline-none" id="menu-btn">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -44,11 +44,10 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <!-- Mobile Menu -->
             <div class="md:hidden hidden mt-4" id="mobile-menu">
-                <a href="#home" class="block py-2 text-gray-800 hover:text-indigo-600">Accueil</a>
-                <a href="#services" class="block py-2 text-gray-800 hover:text-indigo-600">Services</a>
-                <a href="#projects" class="block py-2 text-gray-800 hover:text-indigo-600">Projets</a>
-                <a href="#about" class="block py-2 text-gray-800 hover:text-indigo-600">À Propos</a>
-                <a href="#contact" class="block py-2 text-gray-800 hover:text-indigo-600">Contact</a>
+                <a href="#home" class="block py-2 text-gray-800 hover:text-orange-600">Accueil</a>
+                <a href="#services" class="block py-2 text-gray-800 hover:text-orange-600">Services</a>
+                <a href="#about" class="block py-2 text-gray-800 hover:text-orange-600">À Propos</a>
+                <a href="#contact" class="block py-2 text-gray-800 hover:text-orange-600">Contact</a>
             </div>
         </div>
     </header>
@@ -62,10 +61,10 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     propulser votre entreprise vers l'avenir.</p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                     <a href="#contact"
-                        class="bg-white text-indigo-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300 text-center">Demander
+                        class="bg-white text-orange-400 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition duration-300 text-center">Demander
                         un devis</a>
                     <a href="#services"
-                        class="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-indigo-600 transition duration-300 text-center">Nos
+                        class="border-2 border-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-orange-600 transition duration-300 text-center">Nos
                         services</a>
                 </div>
             </div>
@@ -81,7 +80,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Nos Services Experts</h2>
-                <div class="w-20 h-1 bg-indigo-600 mx-auto mb-6"></div>
+                <div class="w-20 h-1 bg-orange-600 mx-auto mb-6"></div>
                 <p class="text-gray-600 max-w-2xl mx-auto">Nous offrons une gamme complete de services informatiques
                     pour repondre à tous vos besoins technologiques.</p>
             </div>
@@ -89,7 +88,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Service 1 -->
                 <div class="bg-white p-8 rounded-xl shadow-lg transition duration-500 card-hover">
-                    <div class="text-indigo-600 mb-4">
+                    <div class="text-orange-600 mb-4">
                         <i class="fas fa-code text-4xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Developpement Web</h3>
@@ -98,7 +97,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Service 2 -->
                 <div class="bg-white p-8 rounded-xl shadow-lg transition duration-500 card-hover">
-                    <div class="text-indigo-600 mb-4">
+                    <div class="text-orange-600 mb-4">
                         <i class="fas fa-mobile-alt text-4xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Applications Mobiles</h3>
@@ -108,7 +107,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Service 3 -->
                 <div class="bg-white p-8 rounded-xl shadow-lg transition duration-500 card-hover">
-                    <div class="text-indigo-600 mb-4">
+                    <div class="text-orange-600 mb-4">
                         <i class="fas fa-shield-alt text-4xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">maintenance Informatique</h3>
@@ -117,7 +116,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Service 4 -->
                 <div class="bg-white p-8 rounded-xl shadow-lg transition duration-500 card-hover">
-                    <div class="text-indigo-600 mb-4">
+                    <div class="text-orange-600 mb-4">
                         <i class="fas fa-database text-4xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Bases de Donnees</h3>
@@ -127,12 +126,20 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <!-- Service 5 -->
                 <div class="bg-white p-8 rounded-xl shadow-lg transition duration-500 card-hover">
-                    <div class="text-indigo-600 mb-4">
+                    <div class="text-orange-600 mb-4">
                         <i class="fas fa-headset text-4xl"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Support Technique</h3>
                     <p class="text-gray-600">Assistance technique 24/7 pour resoudre vos problemes informatiques
                         rapidement et efficacement.</p>
+                </div>
+                <!-- service 6 -->
+                     <div class="bg-white p-8 rounded-xl shadow-lg transition duration-500 card-hover">
+                    <div class="text-orange-600 mb-4">
+                        <i class="fas fa-laptop-code text-4xl text-orange-600 mb-4"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3"> Logiciel Bureau</h3>
+                    <p class="text-gray-600">  Création de logiciels de gestion personnalisés pour optimiser la productivité de votre entreprise, rapidement et efficacement.</p>
                 </div>
             </div>
         </div>
@@ -147,12 +154,10 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="flex flex-col md:flex-row items-center">
                 <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Notre Histoire</h2>
-                    <div class="w-20 h-1 bg-indigo-600 mb-6"></div>
-                    <p class="text-gray-600 mb-6">Fondee en 2025 par deux passionnés de technologie, TechSolutions est
-                        nee de la volonté d'apporter des solutions informatiques innovantes et accessibles aux
+                    <div class="w-20 h-1 bg-orange-600 mb-6"></div>
+                    <p class="text-gray-600 mb-6">Fondee en 2025 par des passionnés de technologie, TechSolutions est
+                        née de la volonté d'apporter des solutions informatiques innovantes et accessibles aux
                         entreprises de toutes tailles.</p>
-                    <p class="text-gray-600 mb-6">Notre équipe est composée d'experts dans divers domaines de
-                        l'informatique, unis par une même passion pour la technologie et l'innovation.</p>
                     <div class="flex items-center space-x-4">
                     </div>
                 </div>
@@ -161,7 +166,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <h3 class="text-xl font-bold mb-4">Notre Approche</h3>
                         <div class="space-y-4">
                             <div class="flex items-start">
-                                <div class="text-indigo-600 mt-1 mr-4">
+                                <div class="text-orange-600 mt-1 mr-4">
                                     <i class="fas fa-check-circle"></i>
                                 </div>
                                 <div>
@@ -171,7 +176,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="text-indigo-600 mt-1 mr-4">
+                                <div class="text-orange-600 mt-1 mr-4">
                                     <i class="fas fa-check-circle"></i>
                                 </div>
                                 <div>
@@ -181,7 +186,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="text-indigo-600 mt-1 mr-4">
+                                <div class="text-orange-600 mt-1 mr-4">
                                     <i class="fas fa-check-circle"></i>
                                 </div>
                                 <div>
@@ -191,7 +196,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="text-indigo-600 mt-1 mr-4">
+                                <div class="text-orange-600 mt-1 mr-4">
                                     <i class="fas fa-check-circle"></i>
                                 </div>
                                 <div>
@@ -212,7 +217,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="container mx-auto px-6">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Contactez-Nous</h2>
-                <div class="w-20 h-1 bg-indigo-600 mx-auto mb-6"></div>
+                <div class="w-20 h-1 bg-orange-600 mx-auto mb-6"></div>
                 <p class="text-gray-600 max-w-2xl mx-auto">Prêt à transformer votre idée en réalité? Remplissez le
                     formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.</p>
             </div>
@@ -221,45 +226,40 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <div class="container">
                     <form method="POST" class="space-y-6" id="contactForm">
                         <input type="text" name="nom" id="Nom"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent"
                             placeholder="Votre nom complet" required>
                         <input type="email" name="email" id="Email"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent"
                             placeholder="Votre email" required>
                         <input type="text" name="telephone" placeholder="Téléphone" id="telephone"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent"
                             required>
                         <div class="flex flex-col sm:flex-row gap-4">
                             <input type="date" name="date"
-                                class="w-full sm:w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent bg-white text-gray-800"
+                                class="w-full sm:w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent bg-white text-gray-800"
                                 value="<?= date('Y-m-d') ?>"
-                                required>
+                                placeholder = "saisir la date du rendez-vous" required>
                             <input type="time" name="heure"
-                                class="w-full sm:w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent bg-white text-gray-800"
+                                class="w-full sm:w-1/2 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent bg-white text-gray-800"
                                 value="<?= date('H:i') ?>"
-                                required>
+                                required placeholder="saisir l'heure du rendez-vous">
                         </div>
                         <select name="service" id="Services"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent"
                             required>
-                            
+                            <option value="" disabled selected>Choisir un service</option>
                             <?php foreach($services as $service) : ?>
                                 <option value='<?=$service['id']?>'><?=$service['nom']?></option>";
                             <?php endforeach ?>
-                            <!-- <option value="SiteWeb">SiteVitrine</option>
-                            <option value="applicatonMobile">ApplicationMobile</option>
-                            <option value="E-commerce">Site E-commerce</option>
-                            <option value="Maintenance">Maintenance</option>
-                            <option value="Installation">Installation des systemes d'exploitation</option> -->
                         </select>
                         <textarea name="message" id="Message" rows="5"
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-transparent"
-                            placeholder="Laissez un message (facultatif)" rows="4"></textarea>
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-600 focus:border-transparent"
+                            placeholder="Laissez un message " rows="4" required></textarea>
                         
                         <div id="messageConfirm" class=" "></div>
                         
                         <button type="submit"
-                            class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">Réserver</button>
+                            class="w-full bg-orange-400 text-white px-6 py-3 rounded-lg font-semibold hover:bg-orange-700 transition duration-300">Réserver</button>
                     </form>
                 </div>
 
@@ -268,7 +268,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <h3 class="text-xl font-bold text-gray-800 mb-6">Informations de Contact</h3>
                         <div class="space-y-6">
                             <div class="flex items-start">
-                                <div class="text-indigo-600 mt-1 mr-4">
+                                <div class="text-orange-600 mt-1 mr-4">
                                     <i class="fas fa-phone-alt"></i>
                                 </div>
                                 <div>
@@ -277,7 +277,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="text-indigo-600 mt-1 mr-4">
+                                <div class="text-orange-600 mt-1 mr-4">
                                     <i class="fas fa-envelope"></i>
                                 </div>
                                 <div>
@@ -286,13 +286,13 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="text-indigo-600 mt-1 mr-4">
+                                <div class="text-orange-600 mt-1 mr-4">
                                     <i class="fas fa-clock"></i>
                                 </div>
                                 <div>
                                     <h4 class="font-semibold text-gray-800">Heures d'Ouverture</h4>
-                                    <p class="text-gray-600">Lundi - Vendredi: 9h - 18h</p>
-                                    <!-- <p class="text-gray-600">Samedi: 10h - 14h</p> -->
+                                    <p class="text-gray-600">Lundi - Vendredi: 8h - 18h</p>
+                                    <p class="text-gray-600">Samedi: 10h - 15h</p>
                                 </div>
                             </div>
                         </div>
@@ -300,10 +300,10 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="mt-8">
                             <h4 class="font-semibold text-gray-800 mb-4">Suivez-Nous</h4>
                             <div class="flex space-x-4">
-                                <a href="#" class="text-indigo-600 hover:text-indigo-800">
-                                    <i class="fab fa-linkedin-in text-xl"></i>
+                                <a href="https://www.instagram.com/tech.solution412/" class="text-orange-600 hover:text-orange-800" target ="_blank">
+                                    <i class="fab fa-instagram text-xl"></i>
                                 </a>
-                                <a href="#" class="text-indigo-600 hover:text-indigo-800">
+                                <a href="https://github.com/techsolution412" class="text-orange-600 hover:text-orange-800" target ="_blank">
                                     <i class="fab fa-github text-xl"></i>
                                 </a>
                             </div>
@@ -321,7 +321,7 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="container mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <div class="text-2xl font-bold text-white mb-4">Tech<span class="text-indigo-400">Solutions</span>
+                    <div class="text-2xl font-bold text-orange-500 mb-4">Tech<span class="text-gray-800">Solutions</span>
                     </div>
                     <p class="text-gray-400">Votre partenaire technologique pour des solutions innovantes et sur mesure.
                     </p>
@@ -331,8 +331,8 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <ul class="space-y-2">
                         <li><a href="#" class="text-gray-400 hover:text-white transition">Développement Web</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition">Applications Mobiles</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Solutions Cloud</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Sécurité Informatique</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Maintenance</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Installation des systemes d'exploitation</a></li>
                     </ul>
                 </div>
                 <div>
@@ -341,7 +341,6 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <li><a href="#home" class="text-gray-400 hover:text-white transition">Accueil</a></li>
                         <li><a href="#about" class="text-gray-400 hover:text-white transition">À Propos</a></li>
                         <li><a href="#services" class="text-gray-400 hover:text-white transition">Services</a></li>
-                        <li><a href="#projects" class="text-gray-400 hover:text-white transition">Projets</a></li>
                         <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a></li>
                     </ul>
                 </div>
@@ -350,33 +349,27 @@ $services = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <ul class="space-y-2 text-gray-400">
                         <li class="flex items-start">
                             <i class="fas fa-map-marker-alt mt-1 mr-3"></i>
-                            <span>123 Rue de la Technologie, 75000 Paris</span>
+                            <span>1000, Dakar, Senegal</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-phone-alt mt-1 mr-3"></i>
-                            <span>+33 1 23 45 67 89</span>
+                            <span>+221 71 045 11 87</span>
                         </li>
                         <li class="flex items-start">
                             <i class="fas fa-envelope mt-1 mr-3"></i>
-                            <span>contact@techsolutions.fr</span>
+                            <span>solutiontech412@gmail.com</span>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-400 text-sm">© 2023 TechSolutions. Tous droits réservés.</p>
+                <p class="text-gray-400 text-sm">© 2025 TechSolutions. Tous droits réservés.</p>
                 <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-facebook-f"></i>
+                   <a href="https://www.instagram.com/tech.solution412/" class="text-orange-600 hover:text-orange-800" target ="_blank">
+                    <i class="fab fa-instagram text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white transition">
-                        <i class="fab fa-instagram"></i>
+                     <a href="https://github.com/techsolution412" class="text-orange-600 hover:text-orange-800" target ="_blank">
+                     <i class="fab fa-github text-xl"></i>
                     </a>
                 </div>
             </div>

@@ -32,11 +32,13 @@ try {
         $ip = $_SERVER['REMOTE_ADDR'];
 
         // Verification des champs de saisi 
-        if (empty($nom) || empty($email) || empty($telephone) || empty($date) || empty($heure) || empty($service)) {
+        // securite pour le message que le client va laisser
+        if (empty($nom) || empty($email) || empty($telephone) || empty($date) || empty($heure) || empty($service)|| empty($messageClient)) {
             echo json_encode(["succes" => false, "message" => " Tous les champs sont obligatoires."]);
             exit;
         }
-
+   
+       
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo json_encode(["succes" => false, "message" => " Adresse email invalide."]);
             exit;

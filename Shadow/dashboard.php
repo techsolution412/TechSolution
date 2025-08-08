@@ -64,6 +64,7 @@ require_once 'header.php';
                                 <option value="e-commerce" <?= (($_GET['categorie'] ?? '') == 'e-commerce') ? 'selected' : '' ?>>E-commerce</option>
                                 <option value="maintenance" <?= (($_GET['categorie'] ?? '') == 'maintenance') ? 'selected' : '' ?>>Maintenance</option>
                                 <option value="installation" <?= (($_GET['categorie'] ?? '') == 'installation') ? 'selected' : '' ?>>Installation OS</option>
+                                <option value="Logiciel Bureau" <?= (($_GET['categorie'] ?? '') == 'Logiciel Bureau') ? 'selected' : '' ?>>Logiciel Bureau</option>
                             </select>
                             <i class="fas fa-chevron-down absolute right-3 top-3 text-gray-400"></i>
                         </div>

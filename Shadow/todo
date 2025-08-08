@@ -9,3 +9,8 @@
 - securite pour le panel de connexion de l'admin
 - au bout de 5 tentatives l'acces est bloquer
 niveau securite je penses que on n'est bon a notre niveau 
+- $token = "8168815760:AAHzrHyNTxVN366g0oVGCsV0oUf35tttWNU"; //token   
+- 8168815760:AAHzrHyNTxVN366g0oVGCsV0oUf35tttWNU
+- $chat_id = "8029642357" //id de notre chat telegram
+- faires les ajustements sur l'interface client au reveil 
+- repondre au client il va faudra mettre en place un moyen pour automatiser cette tache 

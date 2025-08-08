@@ -2,11 +2,22 @@
 require_once '../config/DataBase.php';
 
 //  les admins je mets ca en constante directe
+
 // $pseudo = "Polo412";
 // $motDePasse = "Hunter412";
 
-$pseudo = "Hitler";
-$motDePasse = "MeinKampf";
+// $pseudo = "Hitler";
+// $motDePasse = "MeinKampf";
+
+
+// $pseudo = "Kevin";
+// $motDePasse = "vald.mak999";
+
+
+// $pseudo = "Aziz";
+// $motDePasse = "darkvador";
+
+
 // Hachage du mot de passe
 $hash = password_hash($motDePasse, PASSWORD_DEFAULT);
 // $hash1 = password_hash($motDePasse1, PASSWORD_DEFAULT);
