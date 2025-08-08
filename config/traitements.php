@@ -103,7 +103,7 @@ try {
 
              //appel de la fonction NotifTelegram($sms)
         NotifTelegram($sms);
-        echo json_encode(["succes" => true, "message" => " Rendez-vous enregistre avec succes."]);
+               echo json_encode(["succes" => true, "message" => " Rendez-vous enregistré avec succès vous allez recevoir un message de confirmation."]);
     }
 } catch (Exception $e) {
     echo json_encode(["succes" => false, "message" => " Erreur : " . $e->getMessage()]);
