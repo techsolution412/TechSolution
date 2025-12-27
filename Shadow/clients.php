@@ -25,31 +25,27 @@ if (!empty($_GET['date'])) {
     $params[':date'] = $_GET['date'];
 }
 
-$where = $conditions ? 'WHERE ' . implode(' AND ', $conditions) : '';
-$sql = "SELECT rdv.*, srv.nom AS service, srv.prix FROM rendezvous AS rdv INNER JOIN services AS srv ON rdv.service_id = srv.id $where ORDER BY date DESC, heure DESC";
-$stmt = $conn->prepare($sql);
-$stmt->execute($params);
-$rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// var_dump($_SESSION);
 
 
 
-// $stmt = $conn->query("SELECT rdv.*, srv.nom AS service, srv.prix FROM rendezvous AS rdv INNER JOIN services AS srv ON rdv.service_id = srv.id WHERE statut != 'archive' ORDER BY date DESC, heure DESC ");
-// $rdv = $conn->query("SELECT nom, email, telephone FROM rendezvous");
 $log = $conn ->query("SELECT * FROM connexions_admin ORDER BY date_connexion DESC");
 $acces_log = $log ->fetchAll(PDO::FETCH_ASSOC);
-// $clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
-// $rendezvous = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-$dateAujourdhui = date('Y-m-d');
-$stmt = $conn->query("SELECT COUNT(*) as nombre FROM rendezvous WHERE date = CURDATE() AND statut != 'archive'");
-// $stmt->execute([':date_aujourdhui' => $dateAujourdhui]);
-$resultat = $stmt->fetch(PDO::FETCH_ASSOC);
-
 require_once 'header.php';
+
+$where = '';
+// Requête adaptée à la table `Clients` dans la base Host (respect de la casse)
+$params = [];
+$sql = "SELECT IdClients AS id, NomClients AS nom, NumeroClients AS numero, Email AS email, Montant AS montant, MontantPaye AS montant_paye, MontantRestant AS montant_restant FROM Clients";
+if (!empty($_GET['search'])) {
+    $sql .= " WHERE NomClients LIKE :search OR Email LIKE :search OR NumeroClients LIKE :search";
+    $params[':search'] = '%' . $_GET['search'] . '%';
+}
+$stmt = $conn->prepare($sql);
+$stmt->execute($params);
+$clients = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-            <!-- Filters and Actions -->
+                    
+               <!-- Filters and Actions -->
             <div class="bg-white p-4 mx-4 my-4 rounded-lg shadow-sm">
                 <form method="GET" class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
                     <div class="flex flex-col sm:flex-row gap-4 flex-1">
@@ -152,28 +148,27 @@ require_once 'header.php';
             <!-- Appointments Table -->
             <div class="bg-white mx-4 my-4 rounded-lg shadow-sm overflow-hidden">
                 <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-                    <h3 class="font-semibold text-gray-800">Liste des Rendez-vous</h3>
+                    <h3 class="font-semibold text-gray-800">Liste des Clients</h3>
                     <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition flex items-center">
-                        <i class="fas fa-plus mr-2"></i> Nouveau RDV
+                        <a href="new_clients.php"><i class="fas fa-plus mr-2"></i> Nouveau Clients</a>
                     </button>
                 </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Heure</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Durée</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Statut</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> Nom Client</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> Numero Client</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">	Email</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">	Montant</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">	Montant Paye</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">	Montant Restant</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"> Actions</th>
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200"> 
-                            <!-- Loop through rendezvous data -->
-
-                          <?php foreach ($rendezvous as $rdv): ?>
-
+                        
+                        <tbody class="bg-white divide-y divide-gray-200">
+                          <?php foreach ($clients as $client): ?>
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="flex items-center">
@@ -181,83 +176,33 @@ require_once 'header.php';
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-8 h-8 rounded-full mr-2"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z"/></svg>
                                         </div>
                                         <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900"><?= htmlspecialchars($rdv['nom']) ?></div>
-                                            <div class="text-sm text-gray-500"><?= htmlspecialchars($rdv['email']) ?></div>
-                                            <div class="text-sm text-gray-500"><?= htmlspecialchars($rdv['telephone']) ?></div>
-
+                                            <div class="text-sm font-medium text-gray-900"><?= htmlspecialchars($client['nom']) ?></div>
+                                            <div class="text-sm text-gray-500"><?= htmlspecialchars($client['email']) ?></div>
+                                            <div class="text-sm text-gray-500"><?= htmlspecialchars($client['numero']) ?></div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <?php
-                                        // Définir la couleur selon le service
-                                        switch (strtolower($rdv['service'])) {
-                                            case 'siteweb':
-                                            case 'site vitrine':
-                                                $badgeClass = 'bg-blue-100 text-blue-800';
-                                                break;
-                                            case 'e-commerce':
-                                            case 'applicationmobile':
-                                                $badgeClass = 'bg-purple-100 text-purple-800';
-                                                break;
-                                            case 'maintenance':
-                                                $badgeClass = 'bg-green-100 text-green-800';
-                                                break;
-                                            case 'installation':
-                                            case "installation des systemes d'exploitation":
-                                                $badgeClass = 'bg-yellow-100 text-yellow-800';
-                                                break;
-                                            default:
-                                                $badgeClass = 'bg-gray-100 text-gray-800';
-                                        }
-                                    ?>
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $badgeClass ?>">
-                                        <?= htmlspecialchars($rdv['service']) ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900"><?= $rdv['date'] ?></div>
-                                    <div class="text-sm text-gray-500"><?$rdv['heure'] ?></div>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <?= htmlspecialchars($client['numero']) ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    60 min
+                                    <?= htmlspecialchars($client['email']) ?>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                  <?php
-                                        // Définir la couleur selon le service
-                                        switch (strtolower($rdv['statut'])) {
-                                            case 'en cours':
-                                                $badgeClass = 'bg-green-100 text-green-800';
-                                                break;
-                                            case 'en attente':
-                                                $badgeClass = 'bg-yellow-100 text-yellow-800';
-                                                break;
-                                            case 'termine':
-                                                $badgeClass = 'bg-gray-100 text-gray-800';
-                                                break;
-                                            case "en retard":
-                                                $badgeClass = 'bg-red-100 text-red-800';
-                                                break;
-                                            default:
-                                                $badgeClass = 'bg-purple-100 text-purple-800';
-                                        }
-                                    ?>
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full <?= $badgeClass ?>"><?= htmlspecialchars($rdv['statut'])?></span>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <?= number_format($client['montant'], 0, ',', ' ') ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <?= number_format($client['montant_paye'], 0, ',', ' ') ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <?= number_format($client['montant_restant'], 0, ',', ' ') ?>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <button
-                                    onclick="window.location.href='modifier_rendezvous.php?id=<?= htmlspecialchars($rdv['id'], ENT_QUOTES) ?>'"
-                                    class="text-primary hover:text-indigo-900 mr-3"><i class="fas fa-edit"></i></button>
-                                    <button 
-                                            class="text-red-600 hover:text-red-900" 
-                                            onclick="archiverRendezVous(<?= htmlspecialchars($rdv['id'], ENT_QUOTES) ?>)"
-                                        >
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>                                
-                                  </td>
+                                    <a href="modifier_client.php?id=<?= htmlspecialchars($client['id'], ENT_QUOTES) ?>" class="text-primary hover:text-indigo-900 mr-3"><i class="fas fa-edit"></i></a>
+                                    <button class="text-red-600 hover:text-red-900" onclick="if(confirm('Archiver ce client ?')) window.location.href='archiver_client.php?id=<?= htmlspecialchars($client['id'], ENT_QUOTES) ?>'"><i class="fas fa-trash-alt"></i></button>
+                                </td>
                             </tr>
                           <?php endforeach; ?>
-
                         </tbody>
                     </table>
                 </div>
@@ -302,60 +247,3 @@ require_once 'header.php';
             </div>
         </div>
     </div>
-
-    <script>
-        // Toggle sidebar on mobile
-        document.getElementById('sidebarToggle').addEventListener('click', function() {
-            document.querySelector('.sidebar').classList.toggle('active');
-        });
-
-        // Sample data for demonstration
-        const appointments = [
-            {
-                id: 1,
-                client: {
-                    name: "Marie Dupont",
-                    email: "marie@example.com",
-                    avatar: "https://randomuser.me/api/portraits/women/44.jpg"
-                },
-                category: "Développement",
-                date: "15 Juin 2023",
-                time: "14:30 - 15:30",
-                duration: "60 min",
-                status: "Confirmé",
-                statusClass: "bg-green-100 text-green-800"
-            },
-            // More appointment data would go here
-        ];
-
-        // You could use this data to dynamically populate the table
-        // For a complete implementation, you would fetch this data from an API
-    </script>
-    <script>
-      function archiverRendezVous(id) {
-          if (confirm("Êtes-vous sûr de vouloir supprimer ce rendez-vous ?")) {
-              fetch('archiver_rendezvous.php', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/x-www-form-urlencoded',
-                  },
-                  body: 'id=' + id
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.success) {
-                      // Recharger la page ou supprimer la ligne du tableau
-                      location.reload();
-                  } else {
-                      alert("Erreur lors de l'archivage: " + data.message);
-                  }
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  alert("Une erreur est survenue");
-              });
-          }
-      }
-    </script>
-</body>
-</html>

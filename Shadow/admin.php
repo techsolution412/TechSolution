@@ -17,6 +17,8 @@ require_once '../config/DataBase.php';
 // $pseudo = "Aziz";
 // $motDePasse = "darkvador";
 
+//$pseudo = "Yassine";
+//$motDePasse = "PlugY@ssine";
 
 // Hachage du mot de passe
 $hash = password_hash($motDePasse, PASSWORD_DEFAULT);

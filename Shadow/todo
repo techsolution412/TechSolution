@@ -14,3 +14,6 @@ niveau securite je penses que on n'est bon a notre niveau
 - $chat_id = "8029642357" //id de notre chat telegram
 - faires les ajustements sur l'interface client au reveil 
 - repondre au client il va faudra mettre en place un moyen pour automatiser cette tache 
+#####
+Mise en place de l'interface clients
+ajout des utilisateurs  au panel admin

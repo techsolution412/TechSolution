@@ -61,7 +61,7 @@
                         </a>
                     </li>
                     <li class="mb-2">
-                        <a href="#" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+                        <a href="clients.php" class= "active" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
                             <i class="fas fa-users mr-3"></i> Clients
                         </a>
                     </li>

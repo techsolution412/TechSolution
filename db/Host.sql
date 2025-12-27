@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : jeu. 10 juil. 2025 à 21:06
+-- Hôte : localhost
+-- Généré le : sam. 27 déc. 2025 à 02:12
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `techsolutions`
+-- Base de données : `Host`
 --
 
 -- --------------------------------------------------------
@@ -40,7 +40,42 @@ CREATE TABLE `admins` (
 INSERT INTO `admins` (`id`, `pseudo`, `mot_de_passe`) VALUES
 (1, 'Polo412', '$2y$10$o6An//WfNv8wNfAfV6Swne1TFbeEn800BsXoRh8ypiapBBmcWQrvW'),
 (2, 'Polo412', '$2y$10$yiuq7.ykQu4hZlDvW6VQ5OQJs9eKbfN.YifWPyYdKYkB1LFRllxdu'),
-(3, 'Hitler', '$2y$10$HGsZssTclDDf55T0PV29ie9YFWuJUecCP4eGAKPFUegDxxiPP9/vq');
+(3, 'Hitler', '$2y$10$HGsZssTclDDf55T0PV29ie9YFWuJUecCP4eGAKPFUegDxxiPP9/vq'),
+(6, 'Aziz', '$2y$10$NONqP6uKeBXQ9EMjzS4VnOvGRj.6.zbDY5HEMwg4Ry7Fx9E0uxG/6'),
+(7, 'Kevin', '$2y$10$CNfs6XxyJ95uPd2gG1B9yeMQ8N7BmkpNa.c6lzeM/oJ1gVyU3WC0q'),
+(8, 'Yassine', '$2y$10$4hzfse7s1pElD5qtPQ3JoOdqrVh5vMqsfQg6tOQCg69qBWSL47cDe');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `Clients`
+--
+
+CREATE TABLE `Clients` (
+  `IdClients` int(11) NOT NULL,
+  `NomClients` varchar(50) NOT NULL,
+  `NumeroClients` varchar(15) NOT NULL,
+  `Email` varchar(50) NOT NULL,
+  `Montant` double NOT NULL,
+  `MontantPaye` double NOT NULL,
+  `MontantRestant` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `Clients`
+--
+
+INSERT INTO `Clients` (`IdClients`, `NomClients`, `NumeroClients`, `Email`, `Montant`, `MontantPaye`, `MontantRestant`) VALUES
+(21, 'Jean Dupont', '770112233', 'jean.dupont@mail.com', 150000, 100000, 50000),
+(22, 'Marie Ndiaye', '776543210', 'marie.ndiaye@mail.com', 200000, 200000, 0),
+(23, 'Paul Martin', '781234567', 'paul.martin@mail.com', 120000, 60000, 60000),
+(24, 'Awa Diop', '774455667', 'awa.diop@mail.com', 180000, 120000, 60000),
+(25, 'Ibrahima Fall', '765998877', 'ibrahima.fall@mail.com', 250000, 150000, 100000),
+(26, 'Fatou Sow', '771122334', 'fatou.sow@mail.com', 90000, 90000, 0),
+(27, 'Moussa Ba', '778899001', 'moussa.ba@mail.com', 300000, 100000, 200000),
+(28, 'Khadija Kane', '764321987', 'khadija.kane@mail.com', 130000, 80000, 50000),
+(29, 'Oumar Diallo', '775566778', 'oumar.diallo@mail.com', 220000, 220000, 0),
+(30, 'Aminata Touré', '762345678', 'aminata.toure@mail.com', 160000, 100000, 60000);
 
 -- --------------------------------------------------------
 
@@ -83,7 +118,10 @@ INSERT INTO `connexions_admin` (`id`, `admin_id`, `pseudo`, `adresse_ip`, `date_
 (19, 3, 'Hitler', '::1', '2025-07-10 01:09:37', 'succès'),
 (20, 3, 'Hitler', '::1', '2025-07-10 15:51:56', 'succès'),
 (21, 3, 'Hitler', '::1', '2025-07-10 16:25:32', 'succès'),
-(22, 3, 'Hitler', '::1', '2025-07-10 18:30:25', 'succès');
+(22, 3, 'Hitler', '::1', '2025-07-10 18:30:25', 'succès'),
+(23, 1, 'Polo412', '::1', '2025-12-26 23:54:36', 'succès'),
+(24, 8, 'Yassine', '::1', '2025-12-27 00:17:23', 'succès'),
+(25, 8, 'Yassine', '::1', '2025-12-27 00:19:20', 'succès');
 
 -- --------------------------------------------------------
 
@@ -109,7 +147,7 @@ CREATE TABLE `rendezvous` (
 --
 
 INSERT INTO `rendezvous` (`id`, `nom`, `email`, `telephone`, `date`, `heure`, `service_id`, `statut`, `dateCreation`, `message`) VALUES
-(3, 'test', 'test@gmail.com', '787518822', '2025-07-11', '20:55:00', 2, 'en attente', '2025-07-10 18:56:37', 'ggggg');
+(3, 'test', 'test@gmail.com', '787518822', '2025-07-11', '20:55:00', 2, 'en retard', '2025-07-10 18:56:37', 'ggggg');
 
 -- --------------------------------------------------------
 
@@ -145,6 +183,13 @@ ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `Clients`
+--
+ALTER TABLE `Clients`
+  ADD PRIMARY KEY (`IdClients`),
+  ADD UNIQUE KEY `NumClients` (`NumeroClients`);
+
+--
 -- Index pour la table `connexions_admin`
 --
 ALTER TABLE `connexions_admin`
@@ -172,13 +217,19 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT pour la table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT pour la table `Clients`
+--
+ALTER TABLE `Clients`
+  MODIFY `IdClients` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT pour la table `connexions_admin`
 --
 ALTER TABLE `connexions_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT pour la table `rendezvous`
